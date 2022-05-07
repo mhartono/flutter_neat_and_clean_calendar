@@ -5,9 +5,9 @@
 Simple flutter calendar based on [flutter_clean_calendar](https://github.com/pmcarlos/flutter_clean_calendar) package.
 This package offers some extra functionality. It introduced a new **NeatCleanCalendarEvent** object, that gets used as the data component transfered the calendar widget as a parameter. So it is possible now to color the dots in the **Calendartiles** with a color corresponding to the event. 
 
-The event list below the calendar view is generated bei the package. Here the extra data of the **NetCleanCalendarEvent** objects again come into play. 
+The event listed below the calendar view is generated from the **NetCleanCalendarEvent** data objects.
 
-The package is highly customizable.
+This package is highly customizable.
 
 ![Screenshot](https://github.com/rwbr/flutter_neat_and_clean_calendar/blob/main/img/screen1.png)
 ![Screenshot](https://github.com/rwbr/flutter_neat_and_clean_calendar/blob/main/img/screen2.png)
@@ -15,13 +15,13 @@ The package is highly customizable.
 
 The calendar view shows a list of events for the selected date. This list view supports **three different types of events:**
 
-* Single day event (starts and ends at certain time on a single day)
-* All-day events (Span over a full day with no specific start and end time, property `isAllDay`)
-* Multi-day events (Start at a specific time on one day and end at a specific time on another day, property `isMultiDay`)
+* Single day event (Event D) starts and ends at certain time on a single day.
+* All-day event (Event B) spans over a full day with no specific start and end time, property `isAllDay`.
+* Multi-day event (Event A) starts at a specific time on one day and end at a specific time on another day, property `isMultiDay`.
 
 ![Event types](https://github.com/rwbr/flutter_neat_and_clean_calendar/blob/main/img/different-events.png)
 
-The property `isAllDay` has a higher priority than 'isMultiDay'. This means, that when you set `isAllDay` to `true` for an event, it will show up in the events list als all-day event without start and end times, no matter if `isMultiDay` was also set to `true`.
+The property `isAllDay` has a higher priority than `isMultiDay`. It means, when you set `isAllDay` to `true` for an event, it will show up in the events list as all-day event without start and end times, regardless the property of `isMultiDay`.
 
 ## Usage
 
@@ -86,27 +86,27 @@ For more details see the **example**.
 ## Properties
 
 ```dart
-/// [onDateSelected] is of type [ValueChanged<DateTime>] and it containes the callback function
-///     extecuted when tapping a date
-/// [onMonthChanged] is of type [ValueChanged<DateTime>] and it containes the callback function
-///     extecuted when changing to another month
+/// [onDateSelected] is of type [ValueChanged<DateTime>] and it contains the callback function
+///     executed when tapping a date.
+/// [onMonthChanged] is of type [ValueChanged<DateTime>] and it contains the callback function
+///     executed when changing to another month.
 /// [onExpandStateChanged] is of type [ValueChanged<bool>] and it contains a callback function
-///     executed when the view changes to expanded or to condensed
+///     executed when the view changes to expanded or to condensed.
 /// [onRangeSelected] contains a callback function of type [ValueChanged], that gets called on changes
 ///     of the range (switch to next or previous week or month)
 /// [onEventSelected] is of type [ValueChanged<NeatCleanCalendarEvent>] and it contains a callback function
-///     executed when an event of the event list is selected
+///     to be executed when an event is selected from the event list.
 /// [datePickerType] defines, if the date picker should get displayed and selects its type
 ///    Choose between datePickerType.hidden, datePickerType.year, datePickerType.date
-/// [isExpandable] is a [bool]. With this parameter you can control, if the view can expand from week view
+/// [isExpandable] is a [bool]. With this parameter you can enable and disable the view expansion from week view
 ///     to month view. Default is [false].
 /// [dayBuilder] can contain a [Widget]. If this property is not null (!= null), this widget will get used to
-///     render the calenar tiles (so you can customize the view)
+///     render the calendar tiles (so you can customize the view)
 /// [eventListBuilder] can optionally contain a [Widget] that gets used to render the event list
-/// [hideArrows] is a bool. When set to [true] the arrows to navigate to the next or previous week/month in the
-///     top bar well get suppressed. Default is [false].
-/// [hideTodayIcon] is a bool. When set to [true] the dispaly of the Today-Icon (button to navigate to today) in the
-///     top bar well get suppressed. Default is [false].
+/// [hideArrows] is a bool. When set to [true] it will hide the navigation arrows (to the next or previous week/month) in the
+///     top bar. Default is [false].
+/// [hideTodayIcon] is a bool. When set to [true] it will hide the Today-Icon (button to navigate to today) in the
+///     top bar. Default is [false].
 /// [hideBottomBar] at the moment has no function. Default is [false].
 /// [events] are of type [Map<DateTime, List<NeatCleanCalendarEvent>>]. This data structure containes the events to display
 /// [defaultDayColor] is the color applied to days in the current month, that are not selected.
@@ -132,8 +132,8 @@ For more details see the **example**.
 /// [dayOfWeekStyle] is a [TextStyle] for styling the text of the weekday names in the top bar.
 /// [bottomBarTextStyle] is a [TextStyle], that sets the style of the text in the bottom bar.
 /// [bottomBarArrowColor] can set the [Color] of the arrow to expand/compress the calendar in the bottom bar.
-/// [bottomBarColor] sets the [Color] of the bottom bar
-/// [expandableDateFormat] defines the formatting of the date in the bottom bar
+/// [bottomBarColor] sets the [Color] of the bottom bar.
+/// [expandableDateFormat] defines the formatting of the date in the bottom bar.
 /// [displayMonthTextStyle] is a [TextStyle] for styling the month name in the top bar.
 /// [datePickerConfig] is a [DatePickerConfig] object. It contains the configuration of the date picker, if enabled.
 
