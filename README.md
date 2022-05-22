@@ -7,7 +7,7 @@ This package offers some extra functionality. It introduced a new **NeatCleanCal
 
 The event list below the calendar view is generated bei the package. Here the extra data of the **NetCleanCalendarEvent** objects again come into play. 
 
-The package is highly customizable.
+This package is highly customizable.
 
 ![Screenshot](https://github.com/rwbr/flutter_neat_and_clean_calendar/blob/main/img/screen1.png)
 ![Screenshot](https://github.com/rwbr/flutter_neat_and_clean_calendar/blob/main/img/screen2.png)
