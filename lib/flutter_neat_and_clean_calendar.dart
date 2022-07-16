@@ -2,6 +2,7 @@ library flutter_neat_and_clean_calendar;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_neat_and_clean_calendar/date_picker_config.dart';
+import 'package:flutter_neat_and_clean_calendar/platform_widgets.dart';
 import './date_utils.dart';
 import './simple_gesture_detector.dart';
 import './calendar_tile.dart';
@@ -185,6 +186,19 @@ class _CalendarState extends State<Calendar> {
     super.initState();
     isExpanded = widget.isExpanded;
 
+    _selectedDate = widget.initialDate ?? DateTime.now();
+    initializeDateFormatting(widget.locale, null).then((_) => setState(() {
+          var monthFormat =
+              DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          displayMonth =
+              '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+        }));
+  }
+
+  /// The method [_updateEventsMap] has the purpose to update the eventsMap, when the calendar widget
+  /// renders its view. When this method executes, it fills the eventsMap with the contents of the
+  /// given eventsList. This can be used to update the events shown by the calendar.
+  void _updateEventsMap() {
     eventsMap = widget.events ?? {};
     // If the user provided a list of events, then convert it to a map, but only if there
     // was no map of events provided. To provide the events in form of a map is the way,
@@ -260,21 +274,16 @@ class _CalendarState extends State<Calendar> {
         }
       });
     }
-
-    _selectedDate = widget.initialDate ?? DateTime.now();
     selectedMonthsDays = _daysInMonth(_selectedDate);
     selectedWeekDays = Utils.daysInRange(
             _firstDayOfWeek(_selectedDate), _lastDayOfWeek(_selectedDate))
         .toList();
-    initializeDateFormatting(widget.locale, null).then((_) => setState(() {
-          var monthFormat =
-              DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
-          displayMonth =
-              '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
-        }));
+
     _selectedEvents = eventsMap?[DateTime(
             _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
         [];
+
+    print('eventsMap has ${eventsMap?.length} entries');
   }
 
   Widget get nameAndIconRow {
@@ -284,11 +293,11 @@ class _CalendarState extends State<Calendar> {
     var jumpDateIcon;
 
     if (!widget.hideArrows) {
-      leftArrow = IconButton(
+      leftArrow = PlatformIconButton(
         onPressed: isExpanded ? previousMonth : previousWeek,
         icon: Icon(Icons.chevron_left),
       );
-      rightArrow = IconButton(
+      rightArrow = PlatformIconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
         icon: Icon(Icons.chevron_right),
       );
@@ -298,7 +307,7 @@ class _CalendarState extends State<Calendar> {
     }
 
     if (!widget.hideTodayIcon) {
-      todayIcon = InkWell(
+      todayIcon = GestureDetector(
         child: Text(widget.todayButtonText),
         onTap: resetToToday,
       );
@@ -308,7 +317,7 @@ class _CalendarState extends State<Calendar> {
 
     if (widget.datePickerType != null &&
         widget.datePickerType != DatePickerType.hidden) {
-      jumpDateIcon = InkWell(
+      jumpDateIcon = GestureDetector(
         child: Icon(Icons.date_range_outlined),
         onTap: () {
           if (widget.datePickerType == DatePickerType.year) {
@@ -556,7 +565,7 @@ class _CalendarState extends State<Calendar> {
                     .format(_selectedDate),
                 style: widget.bottomBarTextStyle ?? TextStyle(fontSize: 13),
               ),
-              IconButton(
+              PlatformIconButton(
                 onPressed: toggleExpanded,
                 iconSize: 25.0,
                 padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
@@ -597,7 +606,7 @@ class _CalendarState extends State<Calendar> {
                       DateFormat('HH:mm').format(event.endTime).toString();
                   return Container(
                     height: 60.0,
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {
                         if (widget.onEventSelected != null) {
                           widget.onEventSelected!(event);
@@ -714,6 +723,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    _updateEventsMap();
+
     // If _selectedEvents is not null, then we sort the events by isAllDay propeerty, so that
     // all day events are displayed at the top of the list.
     // Slightly inexxficient, to do this sort each time, the widget builds.
